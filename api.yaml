@@ -1,0 +1,1141 @@
+openapi: 3.0.0
+info:
+  title: NIRVANA
+  description: >
+    <div><h4>Nirvana is a Music Streaming Web application that allows a user to register as a regular user as well as a Creator. Regular users can play songs, read lyrics, create playlists, remove songs from playlists as well as like and comment on songs. Creators can upload songs, lyrics, create albums while also use the app like a regular user. An admin can view all the songs, albums and creators. He/she can also flag songs and blacklist/whitelist creators if they are found to flout company policies. Creators and Admin can view various statistics on their dashboards.</h4>
+    </div>
+
+    <h2>User Table</h2>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Auto Increment</td>
+            </tr>
+            <tr>
+                <td>username</td>
+                <td>String(50)</td>
+                <td>Unique, Not Null</td>
+            </tr>
+            <tr>
+                <td>email</td>
+                <td>String(120)</td>
+                <td>Unique, Not Null</td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td>String(60)</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>role</td>
+                <td>String(20)</td>
+                <td>Default: 'normal'</td>
+            </tr>
+            <tr>
+                <td>is_creator</td>
+                <td>Boolean</td>
+                <td>Default: False</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Creator Table</h2>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Auto Increment</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key (user.id), Not Null</td>
+            </tr>
+            <tr>
+                <td>bio</td>
+                <td>String(1000)</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>genre</td>
+                <td>String(100)</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>language</td>
+                <td>String(100)</td>
+                <td>Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Playlist Table</h2>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Auto Increment</td>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>String(100)</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key (user.id), Not Null</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <<h2>Song Table</h2>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Auto Increment</td>
+            </tr>
+            <tr>
+                <td>title</td>
+                <td>String(100)</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>singer</td>
+                <td>String(100)</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>release_date</td>
+                <td>Date</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>genre</td>
+                <td>String(100)</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>album</td>
+                <td>String(100)</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>duration</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>lyrics</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>song_file</td>
+                <td>String</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>creator_id</td>
+                <td>Integer</td>
+                <td>Foreign Key (user.id), Not Null</td>
+            </tr>
+            <tr>
+                <td>flag</td>
+                <td>Boolean</td>
+                <td>Not Null, Default: False</td>
+            </tr>
+            <tr>
+                <td>likes</td>
+                <td>Integer</td>
+                <td>Not Null, Default: 0</td>
+            </tr>
+            <tr>
+                <td>rating</td>
+                <td>Float</td>
+                <td>Not Null, Default: 0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Rate Table</h2>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Auto Increment</td>
+            </tr>
+            <tr>
+                <td>song_id</td>
+                <td>Integer</td>
+                <td>Foreign Key (song.id), Not Null</td>
+            </tr>
+            <tr>
+                <td>user_id</td>
+                <td>Integer</td>
+                <td>Foreign Key (user.id), Not Null</td>
+            </tr>
+            <tr>
+                <td>rate</td>
+                <td>Integer</td>
+                <td>Nullable, Default: 0</td>
+            </tr>
+            <tr>
+                <td>like</td>
+                <td>Boolean</td>
+                <td>Nullable</td>
+            </tr>
+            <tr>
+                <td>comment</td>
+                <td>String(1000)</td>
+                <td>Nullable</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Album Table</h2>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Auto Increment</td>
+            </tr>
+            <!-- Repeat the remaining rows for other columns -->
+            <tr>
+                <td>title</td>
+                <td>String(100)</td>
+                <td>Not Null</td>
+            </tr>
+            <tr>
+                <td>artist_id</td>
+                <td>Integer</td>
+                <td>Foreign Key (user.id), Not Null</td>
+            </tr>
+            <!-- Repeat the remaining rows for other columns -->
+        </tbody>
+    </table>
+
+    <h2>PlaylistSongs Table</h2>
+    <table>
+        <thead>
+            <th>Column Name</th>
+            <th>Column Type</th>
+            <th>Constraints</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>id</td>
+                <td>Integer</td>
+                <td>Primary Key, Auto Increment</td>
+            </tr>
+            <!-- Repeat the remaining rows for other columns -->
+            <tr>
+                <td>playlist_id</td>
+                <td>Integer</td>
+                <td>Foreign Key (playlist.id), Not Null</td>
+            </tr>
+            <tr>
+                <td>song_id</td>
+                <td>Integer</td>
+                <td>Foreign Key (song.id), Not Null</td>
+            </tr>
+            <!-- Repeat the remaining rows for other columns -->
+        </tbody>
+    </table>
+        
+        
+    <h3> Error Codes </h3> 
+    <table>
+      <thead>
+        <th>Resource</th>
+        <th>Error Code</th>
+        <th>Message</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>USER</td>
+        <td>USER01</td>
+        <td>Username is not given</td>
+      </tr>
+      <tr>
+        <td>USER01</td>
+        <td>USER02</td>
+        <td>Email is not given</td>
+      </tr>
+      <tr>
+        <td>USER</td>
+        <td>USER03</td>
+        <td>Password is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG01</td>
+        <td>Title is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG02</td>
+        <td>Title is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG02</td>
+        <td>Singer is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG03</td>
+        <td>Release date is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG04</td>
+        <td>Genre is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG05</td>
+        <td>Album is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG06</td>
+        <td>Duration is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG07</td>
+        <td>Lyrics is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG08</td>
+        <td>Creator id is not given</td>
+      </tr>
+      <tr>
+        <td>SONG</td>
+        <td>SONG09</td>
+        <td>Song already exists</td>
+      </tr>
+      <tr>
+        <td>ALBUM</td>
+        <td>ALBUM01</td>
+        <td>Title is not given</td>
+      </tr>
+      <tr>
+        <td>ALBUM</td>
+        <td>ALBUM02</td>
+        <td>Artist id is not given</td>
+      </tr>
+      <tr>
+        <td>ALBUM</td>
+        <td>ALBUM03</td>
+        <td>Album already exists</td>
+      </tr>
+      <tr>
+        <td>ALBUM</td>
+        <td>ALBUM04</td>
+        <td>Album not found</td>
+      </tr>
+      <tr>
+        <td>ALBUM</td>
+        <td>ALBUM05</td>
+        <td>Unable to delete album. Songs associated with the album need to be deleted first.</td>
+      </tr>
+      <tr>
+        <td>PLAYLIST</td>
+        <td>PLAYLIST01</td>
+        <td>Title is not given</td>
+      </tr>
+      <tr>
+        <td>PLAYLIST</td>
+        <td>PLAYLIST02</td>
+        <td>User id is not given</td>
+      </tr>
+      <tr>
+        <td>PLAYLIST</td>
+        <td>PLAYLIST03</td>
+        <td>Playlist already exists</td>
+      </tr>
+      <tr>
+        <td>PLAYLIST</td>
+        <td>PLAYLIST04</td>
+        <td>Playlist not found</td>
+      </tr>
+      <tr>
+        <td>PLAYLIST</td>
+        <td>PLAYLIST05</td>
+        <td>Unable to delete playlist. Songs associated with the playlist need to be deleted first.</td>
+      </tr>
+      </tbody>
+    </table>
+      
+     
+
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8080/
+paths:       
+  /api/users/{user_id}:
+    description: Url to read and update the user resource.
+    get:
+      description: Operation to read user resource
+      parameters:
+        - in: path
+          name: user_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: student object
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                    example: 1
+                  username:
+                    type: string
+                    example: Anwesha
+                  email:
+                    type: string
+                    example: anwesha@gmail.com
+                  
+        '500':
+          description: Internal server error
+        '404':
+          description: user not found
+
+
+  /api/users:
+    description: Url to create user resource
+    post:
+      description: Operation to create the user resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                    type: string
+                    example: Anwesha
+                email:
+                    type: string
+                    example: anwesha@gmail.com
+                password:
+                    type: string
+                    example: 1234
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                title: student object
+                type: object
+                properties:
+                  username:
+                    type: string
+                    example: Anwesha
+                  email:
+                      type: string
+                      example: anwesha@gmail.com
+                  password:
+                      type: string
+                      example: 1234
+        '409':
+          description: User already exist
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+  /api/songs/{song_id}:
+    description: Url to read,update and delete the venue
+    get:
+      description: operation to read the song
+      parameters:
+        - in: path
+          name: song_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    title:
+                      type: string
+                      example: stairway to heaven
+                    singer:
+                      type: string
+                      example: Led Zeppelin
+                    release_date:
+                      type: string
+                      format: date
+                      example: 1971-11-08
+                    genre:
+                      type: string
+                      example: Rock
+                    album:
+                      type: string
+                      example: Led Zeppelin IV
+                    duration:
+                      type: string
+                      example: 8:02
+                    lyrics:
+                      type: string
+                      example: "There's a lady who's sure all that glitters is gold..."
+                    song_file:
+                      type: string
+                      example: stairway_to_heaven.mp3
+                    creator_id:
+                      type: integer
+                      example: 123
+                    flag:
+                      type: boolean
+                      example: true
+                    likes:
+                      type: integer
+                      example: 1000
+                    rating:
+                      type: number
+                      example: 4.5
+        '400':
+          description: Invalid song id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '404':
+          description: song not found
+        '500':
+          description: Internal Server Error
+
+    put:
+      description: operation to update the song
+      parameters:
+        - in: path
+          name: song_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+          
+            
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: stairway to heaven
+                singer:
+                  type: string
+                  example: Led Zeppelin
+                release_date:
+                  type: string
+                  format: date
+                  example: 1971-11-08
+                genre:
+                  type: string
+                  example: Rock
+                album:
+                  type: string
+                  example: Led Zeppelin IV
+                duration:
+                  type: string
+                  example: 8:02
+                lyrics:
+                  type: string
+                  example: "There's a lady who's sure all that glitters is gold..."
+                song_file:
+                  type: string
+                  example: stairway_to_heaven.mp3
+                creator_id:
+                  type: integer
+                  example: 123
+                flag:
+                  type: boolean
+                  example: true
+                likes:
+                  type: integer
+                  example: 1000
+                rating:
+                  type: number
+                  example: 4.5
+                  
+      responses:
+        '201':
+          description: song Update successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    title:
+                      type: string
+                      example: stairway to heaven
+                    singer:
+                      type: string
+                      example: Led Zeppelin
+                    release_date:
+                      type: string
+                      format: date
+                      example: 1971-11-08
+                    genre:
+                      type: string
+                      example: Rock
+                    album:
+                      type: string
+                      example: Led Zeppelin IV
+                    duration:
+                      type: string
+                      example: 8:02
+                    lyrics:
+                      type: string
+                      example: "There's a lady who's sure all that glitters is gold..."
+                    song_file:
+                      type: string
+                      example: stairway_to_heaven.mp3
+                    creator_id:
+                      type: integer
+                      example: 123
+                    flag:
+                      type: boolean
+                      example: true
+                    likes:
+                      type: integer
+                      example: 1000
+                    rating:
+                      type: number
+                      example: 4.5
+        '404':
+          description: song not found
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+  
+    delete:
+      description: operation to delete the song
+      parameters:
+        - in: path
+          name: song_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+        
+      responses:
+        '200':
+          description: Successfully deleted
+        '400':
+          description: Invalid song_id.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '404':
+          description: song not found
+        '500':
+          description: Internal Server Error
+          
+  /api/songs:
+    post:
+      description: Endpoint to create a new song
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: stairway to heaven
+                singer:
+                  type: string
+                  example: Led Zeppelin
+                release_date:
+                  type: string
+                  format: date
+                  example: 1971-11-08
+                genre:
+                  type: string
+                  example: Rock
+                album:
+                  type: string
+                  example: Led Zeppelin IV
+                duration:
+                  type: string
+                  example: 8:02
+                lyrics:
+                  type: string
+                  example: "There's a lady who's sure all that glitters is gold..."
+                song_file:
+                  type: string
+                  example: stairway_to_heaven.mp3
+                creator_id:
+                  type: integer
+                  example: 123
+                flag:
+                  type: boolean
+                  example: true
+                likes:
+                  type: integer
+                  example: 1000
+                rating:
+                  type: number
+                  example: 4.5
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  song_id:
+                    type: integer
+                    example: 1
+                  title:
+                    type: string
+                    example: stairway to heaven
+                  singer:
+                    type: string
+                    example: Led Zeppelin
+                  release_date:
+                    type: string
+                    format: date
+                    example: 1971-11-08
+                  genre:
+                    type: string
+                    example: Rock
+                  album:
+                    type: string
+                    example: Led Zeppelin IV
+                  duration:
+                    type: string
+                    example: 8:02
+                  lyrics:
+                    type: string
+                    example: "There's a lady who's sure all that glitters is gold..."
+                  song_file:
+                    type: string
+                    example: stairway_to_heaven.mp3
+                  creator_id:
+                    type: integer
+                    example: 123
+                  flag:
+                    type: boolean
+                    example: true
+                  likes:
+                    type: integer
+                    example: 1000
+                  rating:
+                    type: number
+                    example: 4.5
+        '409':
+          description: Song already exists
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+  /api/album/{album_id}:
+    description: URL to read, update, and delete the album
+    get:
+      description: Operation to read the album
+      parameters:
+        - in: path
+          name: album_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: Led Zeppelin IV
+                  artist_id:
+                    type: integer
+                    example: 123
+        '400':
+          description: Invalid album id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '404':
+          description: Album not found
+        '500':
+          description: Internal Server Error
+
+    put:
+      description: Operation to update the album
+      parameters:
+        - in: path
+          name: album_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Led Zeppelin IV
+                artist_id:
+                  type: integer
+                  example: 123
+      responses:
+        '201':
+          description: Album update successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: Led Zeppelin IV
+                  artist_id:
+                    type: integer
+                    example: 123
+        '404':
+          description: Album not found
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+    delete:
+      description: Operation to delete the album
+      parameters:
+        - in: path
+          name: album_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully deleted
+        '400':
+          description: Invalid album_id.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '404':
+          description: Album not found
+        '500':
+          description: Internal Server Error
+
+  /api/albums:
+    post:
+      description: Endpoint to create a new album
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Led Zeppelin IV
+                artist_id:
+                  type: integer
+                  example: 123
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: Led Zeppelin IV
+                  artist_id:
+                    type: integer
+                    example: 123
+        '409':
+          description: Album already exists
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+  /api/playlist/{playlist_id}:
+    description: URL to read, update, and delete the playlist
+    get:
+      description: Operation to read the playlist
+      parameters:
+        - in: path
+          name: playlist_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: My Playlist
+                  user_id:
+                    type: integer
+                    example: 456
+        '404':
+          description: Playlist not found
+        '500':
+          description: Internal Server Error
+
+    put:
+      description: Operation to update the playlist
+      parameters:
+        - in: path
+          name: playlist_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: My Updated Playlist
+                user_id:
+                  type: integer
+                  example: 456
+      responses:
+        '201':
+          description: Playlist update successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: My Updated Playlist
+                  user_id:
+                    type: integer
+                    example: 456
+        '404':
+          description: Playlist not found
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+    delete:
+      description: Operation to delete the playlist
+      parameters:
+        - in: path
+          name: playlist_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully deleted
+        '404':
+          description: Playlist not found
+        '500':
+          description: Internal Server Error
+
+  /api/playlists:
+    post:
+      description: Endpoint to create a new playlist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: My Playlist
+                user_id:
+                  type: integer
+                  example: 456
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    example: My Playlist
+                  user_id:
+                    type: integer
+                    example: 456
+        '409':
+          description: Playlist already exists
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
