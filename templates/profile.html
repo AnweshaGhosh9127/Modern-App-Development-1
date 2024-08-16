@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block content %}
+<div class="container" profile-box>
+  <div>
+    <h2>Profile:</h2>
+    <h5>Username: {{name}}</h5>
+    <h5>Email: {{email}}</h5>
+    {% if not creator %}
+    <a href="/creatorregister" class="btn btn-primary">Register as Creator</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container" >
+  <h2>Community Guidelines and Policies</h2> 
+  <h6>Community Guidelines help make Nirvana a safe app for users from all backgrounds and age groups. Violation of these guidelines and policies will cause the creator to get blacklisted. The Admin also possesses the authority to blacklist songs or even delete them permanently from the app in case they violate the company policies. The following policies apply to all types of content on our platform - songs, albums, comments etc.</h6>
+    <p> 1. Albums with titles or description that intends to mislead users are not allowed on Nirvana.  </p>
+    <p> 2. Creators must monitor the comments posted by users on the songs uploaded by them. If comments contain sensitive content, they must be reported to the Admin immediately. </p>
+    <p> 3. Creators must surveil the comments section to prevent any kind of hate speech, harrassment or cyberbullying.</p>
+    <p> 4. Creators are not allowed to upload songs or lyrics that contain abusive language or promote violence, self harm, predatory behaviour etc. </p>
+    <p> 5. Copyright is the exclusive right that the owner of an intellectual property has to that property. Creators should only upload songs that they have permission to use. That means that no creator should upload music tracks that someone else owns the copyright to. </p>
+
+    <a href="/creatorregister" class="btn btn-success">Accept</a>
+    <button
+      class="btn btn-danger"
+      onclick="window.history.back()"
+      style="margin-top: 0px"
+    >
+      Decline
+    </button>
+</div>
+
+{% endblock %}

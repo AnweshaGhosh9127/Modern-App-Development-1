@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container">
+  <h3>Do you want to remove this song from the playlist?</h3>
+  <a href="/song_delete_playlist/{{pid}}/{{id}}" class="btn btn-success">Yes</a>
+  <button
+    class="btn btn-danger"
+    onclick="window.history.back()"
+    style="margin-top: 0px"
+  >
+    Cancel
+  </button>
+</div>
+
+{% endblock %}

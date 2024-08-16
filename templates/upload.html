@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Song</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: white;
+        color: black;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .upload-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      .upload-btn {
+        display: block;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container upload-container">
+      <div>
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for
+        message in messages %}
+        <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+      </div>
+      <div style="margin-bottom: 20px">
+        <h2>Create Album</h2>
+        <div class="form-group">
+          <form method="post" action="/create_album" class="form-group">
+            <label for="Album">Album Name:</label>
+            <input
+              type="text"
+              id="Album"
+              name="title"
+              placeholder="Enter Album Name"
+              class="form-control"
+              style="margin-bottom: 10px"
+            />
+
+            <input type="submit" value="Create" class="btn btn-primary" />
+          </form>
+        </div>
+      </div>
+
+      <h2>Upload a Song</h2>
+      <form method="post" action="/upload_song" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="title">Song Title:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            placeholder="Enter title"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="singer">Artist:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="singer"
+            name="singer"
+            placeholder="Enter singer"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="releaseDate">Release Date:</label>
+          <input
+            type="date"
+            class="form-control"
+            id="releaseDate"
+            name="releaseDate"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="genre">Genre:</label>
+          <select class="form-control" id="genre" name="genre" required>
+            # name = "genre" is the key and value is the genre you select from
+            the dropdown.
+            <option selected disabled>Select a genre</option>
+            <option value="pop">Pop</option>
+            <option value="rock">Rock</option>
+            <option value="jazz">Jazz</option>
+            <option value="hiphop">Hip Hop</option>
+            <option value="country">Country</option>
+            <option value="classical">Classical</option>
+            <option value="folk">Folk</option>
+            <option value="electronic">Electronic</option>
+            <option value="reggae">Reggae</option>
+            <option value="metal">Metal</option>
+            <option value="blues">Blues</option>
+            <option value="funk">Funk</option>
+            <option value="disco">Disco</option>
+            <option value="soul">Soul</option>
+            <option value="rnb">R&B</option>
+            <option value="punk">Punk</option>
+            <option value="indie">Indie</option>
+            <option value="techno">Techno</option>
+            <option value="house">House</option>
+            <option value="dance">Dance</option>
+            <option value="alternative">Alternative</option>
+            <option value="latin">Latin</option>
+            <option value="reggaeton">Reggaeton</option>
+            <option value="trap">Trap</option>
+            <option value="kpop">K-Pop</option>
+            <option value="jpop">J-Pop</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="album">Album:</label>
+          <select name="album" id="album" required>
+            <option selected disabled>Select an album</option>
+            {% for album in albums %}
+            <option value="{{album.title}}">{{album.title}}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="duration">Duration:</label>
+          <input
+            type="float"
+            class="form-control-file"
+            id="duration"
+            name="duration"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="lyrics">Lyrics:</label>
+          <textarea
+            class="form-control"
+            id="lyrics"
+            rows="4"
+            placeholder="Enter lyrics"
+            name="lyrics"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="song">Upload Song:</label>
+          <input
+            type="file"
+            class="form-control-file"
+            id="song"
+            name="song"
+            accept="audio/*"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-success">Upload</button>
+        <button onclick="window.history.back()" class="btn btn-danger">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

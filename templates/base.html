@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nirvana</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="/static/search.css" />
+    <link rel="stylesheet" href="/static/creator_registration.css" />
+    <link rel="stylesheet" href="/static/base.css" />
+    <link rel="stylesheet" href="/static/playlist.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="/static/creator-dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <!-- Importing font family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div>
+      <nav class="navigation">
+        <!-- logo -->
+        <a href="/userhome" class="logo" style="text-decoration: none"
+          ><span>Nirv</span>ana</a
+        >
+        <!-- menu -->
+        <ul class="menu">
+          <li>
+            <a href="/creator" style="text-decoration: none">Creator Account</a>
+          </li>
+          <li><a href="/profile" style="text-decoration: none">Profile</a></li>
+          <li><a href="/logout" style="text-decoration: none">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+    <main>{% block content %}{% endblock %}</main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-logo">
+          <a href="#"><span>Nirv</span>ana</a>
+          <!-- social links -->
+          <div class="footer-social">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-reddit"></i></a>
+            <a href="#"><i class="fab fa-pinterest"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var playButtons = document.querySelectorAll(".play-button");
+      var pauseButtons = document.querySelectorAll(".pause-button");
+      var currentlyPlaying;
+      var shuffleButton = document.getElementById("shuffleButton");
+      var playAllButton = document.getElementById("playAllButton");
+      var repeatButton = document.getElementById("repeatButton");
+
+      playButtons.forEach(function (playButton) {
+        playButton.addEventListener("click", function () {
+          var songId = this.getAttribute("data-song-id");
+          var audio = document.getElementById("audio_" + songId);
+
+          // Pause the currently playing audio, if any
+          if (currentlyPlaying && currentlyPlaying !== audio) {
+            currentlyPlaying.pause();
+          }
+
+          // Play the clicked audio
+          audio.play();
+          currentlyPlaying = audio;
+        });
+      });
+
+      pauseButtons.forEach(function (pauseButton) {
+        pauseButton.addEventListener("click", function () {
+          var songId = this.getAttribute("data-song-id");
+          var audio = document.getElementById("audio_" + songId);
+          audio.pause();
+        });
+      });
+
+      shuffleButton.addEventListener("click", function () {
+        // Get all play buttons and shuffle their order
+        var allPlayButtons = Array.from(
+          document.querySelectorAll(".play-button")
+        );
+        var shuffledButtons = shuffleArray(allPlayButtons);
+
+        // Click the first shuffled play button to start playback
+        if (shuffledButtons.length > 0) {
+          shuffledButtons[0].click();
+        }
+      });
+
+      playAllButton.addEventListener("click", function () {
+        // Click the first play button to start playback
+        var firstPlayButton = document.querySelector(".play-button");
+        if (firstPlayButton) {
+          firstPlayButton.click();
+        }
+      });
+
+      repeatButton.addEventListener("click", function () {
+        // Toggle the repeat functionality
+        if (currentlyPlaying) {
+          currentlyPlaying.loop = !currentlyPlaying.loop;
+        }
+      });
+
+      // Function to shuffle an array
+      function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+        }
+        return array;
+      }
+    });
+  </script>
+</html>

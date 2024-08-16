@@ -1,0 +1,63 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class = container creator-reg-box>
+  <div>
+    <form method="post" action="/creatorregister">
+      <h3>Creator Registration</h3>
+      <div class="form-group">
+        <label for="genre">Genre</label>
+        <select class="form-control" id="genre" name="genre">
+          <option value="pop">Pop</option>
+          <option value="rock">Rock</option>
+          <option value="jazz">Jazz</option>
+          <option value="hiphop">Hip Hop</option>
+          <option value="country">Country</option>
+          <option value="classical">Classical</option>
+          <option value="folk">Folk</option>
+          <option value="electronic">Electronic</option>
+          <option value="reggae">Reggae</option>
+          <option value="metal">Metal</option>
+          <option value="blues">Blues</option>
+          <option value="funk">Funk</option>
+          <option value="disco">Disco</option>
+          <option value="soul">Soul</option>
+          <option value="rnb">R&B</option>
+          <option value="punk">Punk</option>
+          <option value="indie">Indie</option>
+          <option value="techno">Techno</option>
+          <option value="house">House</option>
+          <option value="dance">Dance</option>
+          <option value="alternative">Alternative</option>
+          <option value="latin">Latin</option>
+          <option value="reggaeton">Reggaeton</option>
+          <option value="trap">Trap</option>
+          <option value="kpop">K-Pop</option>
+          <option value="jpop">J-Pop</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="bio">About Yourself</label>
+        <input type="text" 
+               id="bio" 
+               name="bio" 
+               placeholder="Enter bio" 
+               class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label for="Language">Language</label>
+        <input
+          type="text"
+          id="Language"
+          name="language"
+          placeholder="Enter Language"
+          class="form-control"
+        />
+      </div>
+      <input type="submit" 
+             value="Register" 
+             class="btn btn-primary"/>
+    </form>
+  </div>
+</div>
+{% endblock %}

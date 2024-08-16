@@ -1,20 +1,19 @@
 {% extends "base.html" %} {% block content %}
 <div class="container">
-  <h3>{{playlist.title}}</h3>
+  <h3>Create Playlist</h3>
   <div>
     {% with messages = get_flashed_messages() %} {% if messages %}
     <div class="alert alert-danger" role="alert">{{ messages[0] }}</div>
     {% endif %} {% endwith %}
   </div>
   <div class="form-group">
-    <form action="/addsong/{{id}}" method="post">
+    <form action="/createplaylist" method="post">
       <input
         type="text"
         name="playlist_name"
         placeholder="Playlist Name"
         class="form-control"
         style="margin-bottom: 10px"
-        value="{{playlist.title}}"
       />
       <div>
         <div class="check">
@@ -30,7 +29,7 @@
         </div>
         <input
           type="submit"
-          value="Add Songs"
+          value="Create Playlist"
           class="btn btn-primary"
           style="margin-top: 10px"
         />

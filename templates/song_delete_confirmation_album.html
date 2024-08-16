@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container">
+  <h3>Removing this song from the album will also delete it permanently. Do you want to proceed?</h3>
+  <a href="/song_delete_album/{{aid}}/{{id}}" class="btn btn-success">Yes</a>
+  <button
+    class="btn btn-danger"
+    onclick="window.history.back()"
+    style="margin-top: 0px"
+  >
+    Cancel
+  </button>
+</div>
+
+{% endblock %}

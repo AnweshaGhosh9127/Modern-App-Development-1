@@ -1,0 +1,143 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div style="display: flex; justify-content: space-around; margin-top: 15px">
+    <h4 class="text-center">Welcome, {{username}}</h4>
+
+    <div class="search-bar">
+      <div class="input-group">
+        <form action="/search" method="post">
+          <div class="search-form">
+            <div>
+              <input
+                type="text"
+                name="search"
+                class="form-control rounded-pill border-1 py-2"
+                placeholder="Search"
+              />
+            </div>
+            <div>
+              <button
+                class="btn btn-sm btn-light rounded-pill"
+                style="margin-left: 10px"
+              >
+                🔍
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="ratings">
+          <a href="/ratesearch/5">5<i class="bi bi-star-fill"></i></a>
+          <a href="/ratesearch/4">4<i class="bi bi-star-fill"></i></a>
+          <a href="/ratesearch/3">3<i class="bi bi-star-fill"></i></a>
+          <a href="/ratesearch/2">2<i class="bi bi-star-fill"></i></a>
+          <a href="/ratesearch/1">1<i class="bi bi-star-fill"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %}
+    <div class="alert alert-success" role="alert">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
+  </div>
+  <div>
+    <div class="container genre-box">
+      <h2 style="margin-top: 20px">Recommended Tracks</h2>
+      <div class="song-window">
+        <div class="song-container">
+          {% for song in songs %}
+          <div class="song-card">
+            <div class="song-card-body">
+              <div>
+                <h5 class="song-card-title">{{song.title}}</h5>
+                <p class="song-card-text">{{song.singer}}</p>
+                <p class="song-card-text">{{song.release_date}}</p>
+                <p class="song-card-text">{{song.duration}}</p>
+              </div>
+              <div>
+                <audio
+                  id="audio_{{ song.id }}"
+                  src="/static/songs/{{ song.song_file }}"
+                  preload="none"
+                ></audio>
+                <button class="play-button" data-song-id="{{ song.id }}">
+                  <i class="bi bi-play"></i>
+                </button>
+                <button
+                  class="pause-button"
+                  data-song-id="{{ song.id }}"
+                  style="margin-top: 0px"
+                >
+                  <i class="bi bi-pause"></i>
+                </button>
+                <a
+                  href="/readlyrics/{{song.id}}"
+                  class="btn btn-info song-button"
+                >
+                  Read Lyrics
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container genre-box">
+      <h2 style="margin-top: 20px">Your Playlists</h2>
+      <a
+        href="/createplaylist"
+        class="btn btn-primary"
+        style="margin-right: 10px"
+      >
+        Create Playlist
+      </a>
+      <div class="song-window">
+        <div class="song-container">
+          {% for playlist in playlists %}
+          <div class="song-card">
+            <div class="song-card-body">
+              <h5 class="song-card-title">{{playlist.title}}</h5>
+              <a
+                href="/view_tracks/{{playlist.id}}"
+                class="btn btn-info song-button"
+              >
+                View Tracks
+              </a>
+              <a
+                href="/delete_playlist_confirmation/{{playlist.id}}"
+                class="btn btn-danger song-button"
+                >Delete Playlist</a
+              >
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="container genre-box" style="margin-bottom: 30px">
+      <h2>Albums</h2>
+      <div class="song-window">
+        <div class="song-container">
+          {% for album in albums %}
+          <div class="song-card">
+            <div class="song-card-body">
+              <h5 class="song-card-title">{{album.title}}</h5>
+              <a
+                href="/view_album_tracks/{{album.id}}"
+                class="btn btn-info song-button"
+              >
+                View Albums
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+</div>

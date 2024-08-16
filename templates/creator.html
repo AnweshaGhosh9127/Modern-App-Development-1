@@ -1,0 +1,33 @@
+{% extends "creatorbase.html"%} {% block content %}
+<div class="container" kickstart-box>
+  {% if song_list==[] %}
+  <h2 class="text-center">Kickstart your Creator's journey, {{username}}</h2>
+  <h3 class="text-center">Start with uploading songs</h3>
+  <p class="text-center">
+    <a href="/upload_song"><i class="bi bi-plus-circle h1"></i></a>
+  </p>
+  {% endif %}
+  <div class="container genre-box">
+    {% if song_list!=[] %}
+    <h3 style="margin-top: 20px">Created Songs</h3>
+    <div class="song-window">
+      <div class="song-container">
+        <div
+          style="display: flex; justify-content: space-around; margin-top: 15px"
+        ></div>
+        {% for song in song_list %}
+        <div class="song-card">
+          <div class="song-card-body">
+            <h5 class="song-card-title">{{song.title}}</h5>
+            <p class="song-card-text">{{song.singer}}</p>
+            <p class="song-card-text">{{song.release_date}}</p>
+            <p class="song-card-text">{{song.duration}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

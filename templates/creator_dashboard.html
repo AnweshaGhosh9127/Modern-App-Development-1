@@ -1,0 +1,43 @@
+{% extends "creatorbase.html" %} {% block content %}
+<div class="container">
+  <h2>Dashboard</h2>
+  <div class="cdashboard-container">
+    <div class="crd-container"></div>
+    <div class="ccard">
+      <div><strong>Total Songs Uploaded</strong></div>
+      <div class="ccard-body">{{songs_count}}</div>
+    </div>
+    <div class="ccard">
+      <div><strong>Average Rating</strong></div>
+      <div class="ccard-body">{{avg_rating}}</div>
+    </div>
+    <div class="ccard">
+      <div><strong>Total Albums</strong></div>
+      <div class="ccard-body">{{album_count}}</div>
+    </div>
+  </div>
+</div>
+
+<div class="ucontainer">
+  <h2>Your Uploads</h2>
+  <a href="/upload_song" class="btn btn-success">Upload Song</a>
+  <div class="upload-container">
+    {% for song in songs %}
+    <div class="upload-container-card">
+      <div>{{song.title}}</div>
+      <div>
+        <a href="/readlyrics/{{song.id}}" class="btn btn-info"
+          >View Lyrics</a
+        >
+        <a href="/edit_songs/{{song.id}}" class="btn btn-warning">Edit</a>
+        <a
+          href="/song_delete_confirmation/{{song.id}}"
+          class="btn btn-danger"
+          style="margin-top: 0px"
+          >Delete</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

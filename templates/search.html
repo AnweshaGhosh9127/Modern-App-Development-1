@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="album-container">
+    {% for album in albums %}
+    <h6>{{album}}</h6>
+    <div class="album-songs">
+      {% for song in albums[album] %}
+      <div class="search-card">
+        <h6>{{song.title}}</h6>
+        <h6>{{song.singer}}</h6>
+        <h6>{{song.genre}}</h6>
+        <h6>{{song.duration}}</h6>
+        <a href="/readlyrics/{{song.id}}" class="btn btn-info">View Lyrics</a>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

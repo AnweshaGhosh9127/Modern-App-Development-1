@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="shuffle">
+    <h3>{{name}}</h3>
+    <button class="btn btn-outline-primary" id="shuffleButton"><i class="bi bi-shuffle"></i></button>
+    <button class="btn btn-outline-success" id="playAllButton"><i class="bi bi-play-fill"></i></button>
+    <button class="btn btn-outline-warning" id="repeatButton"><i class="bi bi-repeat-1"></i></button>
+  </div>
+  <div class="container playlist-container">
+    {% if songs %} {% for song in songs %}
+    <div class="song-card">
+      <div class="song-card-body" style="display: block">
+        <div>
+          <h5 class="song-card-title">{{song.title}}</h5>
+          <p>{{song.singer}}</p>
+          <p>{{song.duration}}</p>
+        </div>
+        <div>
+          <audio
+            id="audio_{{ song.id }}"
+            src="/static/songs/{{ song.song_file }}"
+            preload="none"
+          ></audio>
+          <button class="play-button" data-song-id="{{ song.id }}">
+            <i class="bi bi-play"></i>
+          </button>
+          <button
+            class="pause-button"
+            data-song-id="{{ song.id }}"
+            style="margin-top: 0px"
+          >
+            <i class="bi bi-pause"></i>
+          </button>
+          <a href="/readlyrics/{{song.id}}" class="btn btn-info song-button">
+            Read Lyrics
+          </a>
+        </div>
+        <div>
+          <a
+            href="/song_delete_confirmation_playlist/{{id}}/{{song.id}}"
+            class="btn btn-danger"
+            style="margin-top: 10px; width: 100%"
+            >Remove from Playlist</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    <div class="container add">
+      <button
+        class="btn btn-success"
+        style="margin-top: 25px"
+        onclick="window.location.href='/addsong/{{id}}'"
+      >
+        Add More Songs
+      </button>
+    </div>
+
+    {% else %}
+    <div style="display: block">
+      <div>
+        <p>No songs in your playlist</p>
+      </div>
+      <div>
+        <button
+          class="btn btn-primary"
+          onclick="window.location.href='/addsong/{{id}}'"
+        >
+          Add Songs
+        </button>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
