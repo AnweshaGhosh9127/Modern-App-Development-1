@@ -1,0 +1,20 @@
+.search-card{
+    border: 2px solid black;
+    width: 200px;
+    height: 200px;
+    border-radius: 4px;
+    background-color: #fdf5ff;
+    text-align: center;
+    padding: 10px;
+}
+
+
+.album-songs{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 10px;
+    overflow-x: auto;
+}
